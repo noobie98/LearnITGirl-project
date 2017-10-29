@@ -21,10 +21,13 @@
       </div>
       </form>
       </div> -->
-  <h2>Sign up</h2>
+    <h4 class = "modal-title">New User? SignUp here </h4>
+    </div>
+    <div class = "modal-body">
     <form method="post" action=".">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit" class = "btn btn-primary">Sign up</button>
   </form>
+  </div>
 {% endblock %}

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   
-  {% block title %}<title>Pocket</title>{% endblock %}
+  {% block title %}<title>Bookmark</title>{% endblock %}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -11,7 +11,7 @@
   
   <!-- Add additional CSS in static file -->
   {% load static %}
-  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static "style.css" %}" />
 </head>
 
 <body>
@@ -19,13 +19,13 @@
   <div class="container-fluid">
       <div class = "panel-group">
       <div class = "panel panel-primary">
-      <div class = "panel-heading">Welcome to Pocket</div>
+      <div class = "panel-heading">Welcome to Bookmark++</div>
       </div>
       </div>
       <div class = "jumbotron">
       <div class = "row">
       <div class = "col-md-4">
-        <img src = "20150225_134637.jpg" alt="sorry">
+      <img src= "/static/images/abc.jpg" alt="sorry"/>
       </div>
       <div class = "col-md-8">
       <div class = "modal-content">

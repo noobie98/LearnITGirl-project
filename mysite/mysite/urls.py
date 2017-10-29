@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import include,url
 from django.contrib import admin
+from bookmark import views
 
 urlpatterns = [
+	url(r'^$',views.home_redirect,name='home_redirect'),
     url(r'^admin/', admin.site.urls),
      url(r'^bookmark/', include('bookmark.urls')),
 ]

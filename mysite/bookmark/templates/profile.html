@@ -1,0 +1,12 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<div class = "modal-header">
+    <h4 class = "modal-title">Welcome to Bookmark++</h4>
+    </div>
+    <div class = "modal-body">
+    {% csrf_token %}
+    <p>Welcome {{ user }} !</p>
+  </div>
+{% endblock %}
