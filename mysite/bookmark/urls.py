@@ -8,4 +8,6 @@ urlpatterns = [
     url(r'^register/$',views.register, name='register'),
     url(r'^login/$',views.login_view, name='login'),
     url(r'^register/success/$',views.register_success, name='register_success'),
+    url(r'^category/$',views.get_category,name='getcategory'),
+    url(r'^#/$',views.save_bookmark,name='savebookmark'),
 ]

@@ -32,4 +32,7 @@ model-header{
     transition: all .1s ease-in-out;
     width: 100%;
 }
+.glyphicon  {
+    color: #FFFFFF;
+}
 

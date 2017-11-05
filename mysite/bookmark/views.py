@@ -2,11 +2,13 @@
 from __future__ import unicode_literals
 #from login.forms import *
 from bookmark.forms import signUpForm
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect,HttpResponse
 from django.shortcuts import render,redirect
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import authenticate,login
 from .forms import UserLoginForm
+from django.contrib.auth.models import User
+from .models import Category,UserBookmark
 # Create your views here.
 
 def index(request):
@@ -18,14 +20,15 @@ def register(request):
     if request.method == 'POST':
         form = signUpForm(request.POST) # Create a form instance and populate it with data from the request (binding):
         if form.is_valid():
-            form.save()
+            user = form.save()
+            request.session['user'] = user.pk
             # user=User.objects.create_user(
             # email=form.cleaned_data['email'],
             # password = form.cleaned_data['Password'],
             # password2 = form.cleaned_data['Confirm password']
             # )
             # return HttpResponseRedirect('/register/success/')
-            return render(request,'registerInterest.html')
+            return render(request,'category.html')
 # If this is a GET (or any other method) create the default form.
     else:
         form = signUpForm()
@@ -39,7 +42,8 @@ def login_view(request):
         # args = user
         args = {'user': request.user}
         login(request,user)
-        return render(request,'profile.html',args)
+        blist = get_bookmark(user)
+        return render(request,'myprofile.html',{'blist': blist})
     return render(request,'login.html',{'form': form})
 
 def register_success(request):
@@ -49,9 +53,29 @@ def register_success(request):
         )
 def home_redirect(request):
     return redirect('/bookmark/')
-# def get_category(request):
-#     cname = request.POST.get("dropdown1")
-#     user.category=cname
-#     user.save()
+def get_category(request):
+    cname = request.POST.get("dropdown1")
+    user = request.session.get('user')
+    print cname
+    print user
+    obj=Category(user_id=user,category=cname)
+    obj.save()
+    return HttpResponse("Registeration succesfull")
+    # user.category=cname
+    # user.save()
+def save_bookmark(request):
+    bmark = request.POST.get("url")
+    user = request.user.pk
+    obj = UserBookmark(user_id=user,bookmark=bmark)
+    obj.save()
+    blist = get_bookmark(user)
+    return render(request,'myprofile.html',{'blist': blist})
+def get_bookmark(user):
+    blist = UserBookmark.objects.filter(user = user)
+    return blist
+
+        
+
+    
 
 

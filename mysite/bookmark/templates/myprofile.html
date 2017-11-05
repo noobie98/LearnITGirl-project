@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  {% block title %}<title>Bookmark</title>{% endblock %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+
+// $(document).ready(function(){
+
+//     $('[data-toggle="tooltip"]').tooltip({
+//       placement : 'bottom'
+
+//     });
+
+// });
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip({ 
+    container: 'body', 
+    html: false 
+  });
+  
+  // $('[data-toggle="popover"]').popover({ 
+  //   container: 'body', 
+  //   html: false  
+  // });
+  $("[data-toggle=popover]").popover({
+    html: true, 
+    content: function() {
+          return $('#popover-content').html();
+    }
+});
+});
+</script>
+  
+  <!-- Add additional CSS in static file -->
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static "style.css" %}" />
+</head>
+
+<body>
+
+  <div class="container-fluid">
+      <div class = "panel-group">
+      <div class = "panel panel-primary">
+      <div class = "panel-heading">Welcome to Bookmark++
+      <!-- <a href ="#"><span class = "pull-right glyphicon glyphicon-plus" data-toggle = "tooltip" data-original-title = "Save a bookmark"></span></a> -->
+      <div style="float:right;">
+     <a href="#" data-toggle="tooltip" title="Save a Bookmark" data-placement="bottom">
+     <span class="glyphicon glyphicon-plus" data-toggle="popover" data-placement="left" title="Save your bookmarks here"</span>
+     <div id="popover-content" class="hide">
+    <form name ="bform" method = "post" action = "{% url 'savebookmark' %}" class ="form-inline">
+     {% csrf_token %}
+      <div class="form-group">
+      <input placeholder = "http://..." name = "url" class = "form-control" type = "text">
+      <button type = "submit" class = "btn btn-danger">Save</button>
+      </div>
+      </form>
+      </div>
+    </a>
+    </div>
+      </div>
+      </div>
+      </div>
+      <div class = "jumbotron">
+      <div class = "row">
+      <div class = "col-md-4">
+      <ul>
+      {% for b in blist %}
+      <li><a href = "{{ b.bookmark }}">{{ b.bookmark }}</a></li>
+      {% endfor %}
+      </ul>
+      </div>
+      <div class = "col-md-8">
+      </div>
+      </div>
+      </div>
+</body>
+</html>

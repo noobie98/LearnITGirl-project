@@ -1,9 +1,9 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-<form method = "post" action ="{% url getcategory %}">
+<form method = "post" action ="{% url 'getcategory' %}">
 {% csrf_token %}
-<select multiple = "dropdown">
+<select name = "dropdown1" multiple>
   <option value="python">Python</option>
   <option value="android">Android</option>
   <option value="data science">Data Science</option>
