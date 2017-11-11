@@ -35,6 +35,27 @@ $(function () {
     }
 });
 });
+
+// $(function(){ // DOM ready
+
+//   // ::: TAGS BOX
+
+//   $("#tag input").on({
+//     focusout : function() {
+//       var txt = this.value.replace(/[^a-z0-9\+\-\.\#]/ig,''); // allowed characters
+//       if(txt) $("<span/>", {text:txt.toLowerCase(), insertBefore:this});
+//       this.value = "";
+//     },
+//     keyup : function(ev) {
+//       // if: comma|enter (delimit more keyCodes with | pipe)
+//       if(/(188|13)/.test(ev.which)) $(this).focusout(); 
+//     }
+//   });
+//   $('#tag').on('click', 'span', function() {
+//     if(confirm("Remove "+ $(this).text() +"?")) $(this).remove(); 
+//   });
+
+// });
 </script>
   
   <!-- Add additional CSS in static file -->
@@ -47,36 +68,94 @@ $(function () {
   <div class="container-fluid">
       <div class = "panel-group">
       <div class = "panel panel-primary">
-      <div class = "panel-heading">Welcome to Bookmark++
+      <div class = "panel-heading" style="">Welcome to Bookmark++
       <!-- <a href ="#"><span class = "pull-right glyphicon glyphicon-plus" data-toggle = "tooltip" data-original-title = "Save a bookmark"></span></a> -->
-      <div style="float:right;">
+      <a class = "icon" href ="{% url 'home' %}">Explore</a>
+      <div style = "float:right;">
+      <!-- <button type = "submit" class = "btn btn-primary" style="float: right;margin-top:-6.5px">Logout</button> -->
      <a href="#" data-toggle="tooltip" title="Save a Bookmark" data-placement="bottom">
      <span class="glyphicon glyphicon-plus" data-toggle="popover" data-placement="left" title="Save your bookmarks here"</span>
      <div id="popover-content" class="hide">
     <form name ="bform" method = "post" action = "{% url 'savebookmark' %}" class ="form-inline">
      {% csrf_token %}
       <div class="form-group">
-      <input placeholder = "http://..." name = "url" class = "form-control" type = "text">
+      <input placeholder = "http://..." name = "url" class = "form-control" type = "text" required>
       <button type = "submit" class = "btn btn-danger">Save</button>
-      </div>
+      <!-- <div class="dropdown">
+      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Add tags
+      <span class="caret"></span></button>
+      <ul class="dropdown-menu">
+      <li><a href="#">HTML</a></li>
+      <li><a href="#">CSS</a></li>
+      <li><a href="#">JavaScript</a></li>
+     </ul>
+      </div> -->
+     </div> 
       </form>
       </div>
     </a>
+    <button type = "submit" class = "btn btn-primary" style="margin-top:-6.5px">Logout</button>
     </div>
       </div>
       </div>
       </div>
       <div class = "jumbotron">
       <div class = "row">
-      <div class = "col-md-4">
+      <!-- <div class = "col-md-4"> -->
+      <div id = "container" class = "cols">
       <ul>
       {% for b in blist %}
-      <li><a href = "{{ b.bookmark }}">{{ b.bookmark }}</a></li>
+      <li class="article">
+      <a href = "{{ b.bookmark }}">{{ b.bookmark }}</a>
+      <ul>
+      <li>
+      <a href = "#" data-toggle="modal" data-target = "#myModal"><span class = "glyphicon glyphicon-tag"></span></a>
+       <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Add tags</h4>
+        </div>
+        <div class="modal-body">
+        <form name = "form2" method = "post" action = "" class = "form-inline">
+        <div class = "form-group">
+        <input name = "tag" class = "form-control" id = "tag" type = "text" list = "categories" required>
+        <datalist id="categories">
+        <option value="Data Science">
+        <option value="Python">
+        <option value = "Android">
+        <option value="Java">
+        <option value="C++">
+        <option value = "Data Analytics">
+        <option value = "Big Data">
+        <option value = "Graphics">
+        </datalist>
+        <button type = "submit" class = "btn btn-danger">Save</button>
+        </div>
+        </form>
+        </div>
+        <div class="modal-footer">
+        </div>
+        </div>
+        </div>
+        </div>
+        </li>
+      </ul>
+
+
+      </li>
+      
       {% endfor %}
+
+
       </ul>
       </div>
-      <div class = "col-md-8">
-      </div>
+      <!-- </div> -->
+      <!-- <div class = "col-md-8">
+      </div> -->
       </div>
       </div>
 </body>

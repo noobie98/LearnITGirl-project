@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^register/success/$',views.register_success, name='register_success'),
     url(r'^category/$',views.get_category,name='getcategory'),
     url(r'^#/$',views.save_bookmark,name='savebookmark'),
+    url(r'^home/$',views.home,name='home'),
 ]

@@ -54,11 +54,11 @@ def register_success(request):
 def home_redirect(request):
     return redirect('/bookmark/')
 def get_category(request):
-    cname = request.POST.get("dropdown1")
+    clist = request.POST.getlist("categories")
     user = request.session.get('user')
-    print cname
+    print clist
     print user
-    obj=Category(user_id=user,category=cname)
+    obj=Category(user_id=user,category=clist)
     obj.save()
     return HttpResponse("Registeration succesfull")
     # user.category=cname
@@ -73,6 +73,8 @@ def save_bookmark(request):
 def get_bookmark(user):
     blist = UserBookmark.objects.filter(user = user)
     return blist
+def home(request):
+    return HttpResponse("start exploring")
 
         
 

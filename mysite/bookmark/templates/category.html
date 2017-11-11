@@ -3,16 +3,45 @@
 {% block content %}
 <form method = "post" action ="{% url 'getcategory' %}">
 {% csrf_token %}
-<select name = "dropdown1" multiple>
-  <option value="python">Python</option>
-  <option value="android">Android</option>
-  <option value="data science">Data Science</option>
-  <option value="java">Java</option>
-  <option value="big data">Big Data</option>
-  <option value="C++">C++</option>
-  <option value="Networks">Networks</option>
-  <option value="UX design">UX Design</option>
-</select>
-<button type = "submit" class = "btn btn-primary">Submit</button>
+<div class = "text-center">
+<h2 class = "section-heading">Mark your interests</h2>
+<p class = "text-faded">Select the tags which most closely define your interests</p>
+<div>
+<label class = "checkbox-inline">
+<input type = "checkbox" name = "categories" value="Data Science">
+<span class = "badge badge-warning">Data Science</span>
+</label>
+<label class = "checkbox-inline">
+<input type = "checkbox" name = "categories" value="Python">
+<span class = "badge badge-warning">Python</span>
+</label>
+<label class = "checkbox-inline">
+<input type = "checkbox" name = "categories" value="Android">
+<span class = "badge badge-warning">Android</span>
+</label>
+<label class = "checkbox-inline">
+<input type = "checkbox" name = "categories" value="Java">
+<span class = "badge badge-warning">Java</span>
+</label>
+<label class = "checkbox-inline">
+<input type = "checkbox" name = "categories" value="C++">
+<span class = "badge badge-warning">C++</span>
+</label>
+<label class = "checkbox-inline">
+<input type = "checkbox" name = "categories" value="Data Analytics">
+<span class = "badge badge-warning">Data Analytics</span>
+</label>
+<label class = "checkbox-inline">
+<input type = "checkbox" name = "categories" value="Big Data">
+<span class = "badge badge-warning">Big Data</span>
+</label>
+<label class = "checkbox-inline">
+<input type = "checkbox" name = "categories" value="Graphics">
+<span class = "badge badge-warning">Graphics</span>
+</label>
+</div>
+<br>
+<button type = "submit" class = "btn btn-primary">Done</button>
+</div>
 </form>
 {% endblock %}

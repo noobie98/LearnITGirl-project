@@ -24,8 +24,10 @@
       </div>
       <div class = "jumbotron">
       <div class = "row">
+      {% load static %}
       <div class = "col-md-4">
-      <img src= "/static/images/abc.jpg" alt="sorry"/>
+      <!-- <img src= "/static/images/abc.jpg" alt="sorry"/> -->
+      <img src= "{% static "images/abc.jpg" %}" alt="sorry"/>
       </div>
       <div class = "col-md-8">
       <div class = "modal-content">
