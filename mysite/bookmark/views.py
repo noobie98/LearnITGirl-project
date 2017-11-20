@@ -51,8 +51,10 @@ def register_success(request):
         request,
         'success.html',
         )
+    
 def home_redirect(request):
     return redirect('/bookmark/')
+
 def get_category(request):
     clist = request.POST.getlist("categories")
     user = request.session.get('user')
@@ -70,11 +72,30 @@ def save_bookmark(request):
     obj.save()
     blist = get_bookmark(user)
     return render(request,'myprofile.html',{'blist': blist})
+
 def get_bookmark(user):
     blist = UserBookmark.objects.filter(user = user)
     return blist
+
 def home(request):
-    return HttpResponse("start exploring")
+    category=Category.objects.filter(user=request.user.pk)
+    # bookmarks= UserBookmark.objects.values('bookmark').filter(tag__in = category).exclude(user=request.user.pk)
+    # bookmarks = UserBookmark.objects.values('bookmark').filter(tag__in = ['java','android','python'])
+    bookmarks = UserBookmark.objects.filter(tag__in = ['Java','Android','Python','Data Science','Data Analytics'])
+    print bookmarks
+    return render(request,'home.html')
+
+def save_tag(request):
+    tagslist = request.POST.getlist("tag")
+    bookmark = request.POST.get("bookmark")
+    print bookmark
+    obj=UserBookmark.objects.get(bookmark = bookmark)
+    user = request.user.pk
+    obj.tag = tagslist
+    obj.save()
+    blist = get_bookmark(user)
+    return render(request,'myprofile.html',{'blist' : blist})
+
 
         
 

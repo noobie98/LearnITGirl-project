@@ -19,4 +19,4 @@ class UserBookmark(models.Model):
 	tag = models.CharField(max_length = 100)
 
 	def __str__(self):
-		return '%s %s'%(self.user,self.bookmark)
+		return '%i %s %s %s'%(self.id,self.user,self.bookmark,self.tag)

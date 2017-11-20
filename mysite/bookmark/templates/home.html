@@ -19,22 +19,16 @@
   <div class="container-fluid">
       <div class = "panel-group">
       <div class = "panel panel-primary">
-      <div class = "panel-heading">Welcome to Bookmark++</div>
+      <div class = "panel-heading">Welcome to Bookmark++
+      <div style = "float:right;">
+        <button type = "submit" class = "btn btn-primary" style="margin-top:-6.5px">Logout</button>
+      </div>
+      </div>
       </div>
       </div>
       <div class = "jumbotron">
       <div class = "row">
-      <div class = "col-md-4">
-      <!-- <img src= "/static/images/abc.jpg" alt="sorry"/> -->
-      {% load static %}
-      <img src= "{% static "images/abc.jpg" %}" alt="sorry"/>
-      </div>
-      <div class = "col-md-8">
-      <div class = "modal-content">
-
-        {% block content %}{% endblock %}
-        
-      <div class = "modal-footer"></div>
+      <div id = "container" class = "cols">
       </div>
       </div>
       </div>

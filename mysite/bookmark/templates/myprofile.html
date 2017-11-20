@@ -5,9 +5,19 @@
   {% block title %}<title>Bookmark</title>{% endblock %}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script data-require="jquery@*" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  // <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script> -->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+
+    <!-- The real deal -->
+  <script src="js/tag-it.js" type="text/javascript" charset="utf-8"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  {% load static %}
+  <script src="{% static "js/tag-it.js" %}" type="text/javascript" charset="utf-8"></script>
+  <script src="{% static "js/tags.js" %}" type="text/javascript" charset="utf-8"></script>
   <script type="text/javascript">
 
 // $(document).ready(function(){
@@ -35,32 +45,13 @@ $(function () {
     }
 });
 });
-
-// $(function(){ // DOM ready
-
-//   // ::: TAGS BOX
-
-//   $("#tag input").on({
-//     focusout : function() {
-//       var txt = this.value.replace(/[^a-z0-9\+\-\.\#]/ig,''); // allowed characters
-//       if(txt) $("<span/>", {text:txt.toLowerCase(), insertBefore:this});
-//       this.value = "";
-//     },
-//     keyup : function(ev) {
-//       // if: comma|enter (delimit more keyCodes with | pipe)
-//       if(/(188|13)/.test(ev.which)) $(this).focusout(); 
-//     }
-//   });
-//   $('#tag').on('click', 'span', function() {
-//     if(confirm("Remove "+ $(this).text() +"?")) $(this).remove(); 
-//   });
-
-// });
 </script>
   
   <!-- Add additional CSS in static file -->
   {% load static %}
   <link rel="stylesheet" type="text/css" href="{% static "style.css" %}" />
+   <link href="{% static "jquery.tagit.css" %}" rel="stylesheet" type="text/css">
+<link href="{% static "tagit.ui-zendesk.css" %}" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -81,20 +72,11 @@ $(function () {
       <div class="form-group">
       <input placeholder = "http://..." name = "url" class = "form-control" type = "text" required>
       <button type = "submit" class = "btn btn-danger">Save</button>
-      <!-- <div class="dropdown">
-      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Add tags
-      <span class="caret"></span></button>
-      <ul class="dropdown-menu">
-      <li><a href="#">HTML</a></li>
-      <li><a href="#">CSS</a></li>
-      <li><a href="#">JavaScript</a></li>
-     </ul>
-      </div> -->
      </div> 
       </form>
       </div>
     </a>
-    <button type = "submit" class = "btn btn-primary" style="margin-top:-6.5px">Logout</button>
+    <a href = "{% url 'index' %}" class = "btn btn-primary" style="margin-top:-6.5px">Logout</a>
     </div>
       </div>
       </div>
@@ -107,10 +89,11 @@ $(function () {
       {% for b in blist %}
       <li class="article">
       <a href = "{{ b.bookmark }}">{{ b.bookmark }}</a>
-      <ul>
-      <li>
-      <a href = "#" data-toggle="modal" data-target = "#myModal"><span class = "glyphicon glyphicon-tag"></span></a>
-       <div class="modal fade" id="myModal" role="dialog">
+      <!-- <ul>
+      <li> -->
+      <div><a href = "#myModal" data-toggle="modal" id = "{{ b.bookmark }}" data-target = "#edit-modal"><span class = "glyphicon glyphicon-tag"></span></a></div>
+      <!-- <div><a href = "#myModal" data-toggle="modal" id = "1" data-target ="#edit-modal">hello</a></div> -->
+       <div id="edit-modal" class="modal fade"  role="dialog" aria-hidden="true">
     <div class="modal-dialog">
     
       <!-- Modal content-->
@@ -120,19 +103,11 @@ $(function () {
           <h4 class="modal-title">Add tags</h4>
         </div>
         <div class="modal-body">
-        <form name = "form2" method = "post" action = "" class = "form-inline">
+       <form name = "form2" id = "form2" method = "post" action = "{% url 'savetag' %}" class = "form-inline">
+        {% csrf_token %}
         <div class = "form-group">
-        <input name = "tag" class = "form-control" id = "tag" type = "text" list = "categories" required>
-        <datalist id="categories">
-        <option value="Data Science">
-        <option value="Python">
-        <option value = "Android">
-        <option value="Java">
-        <option value="C++">
-        <option value = "Data Analytics">
-        <option value = "Big Data">
-        <option value = "Graphics">
-        </datalist>
+        <input name = "tag"  id = "tag" required>
+        <input type="hidden" id = "field1" name="bookmark" value="">
         <button type = "submit" class = "btn btn-danger">Save</button>
         </div>
         </form>
@@ -158,5 +133,26 @@ $(function () {
       </div> -->
       </div>
       </div>
+       <script>
+        $('#edit-modal').on('show.bs.modal', function(e) {
+            
+            var $modal = $(this),
+                esseyId = e.relatedTarget.id;
+                document.getElementById('field1').value = esseyId
+                    $modal.find('.edit-content').html(esseyId);
+//                }
+//            });
+            
+        });
+//         $('#edit-modal').on('hidden.bs.modal', function(e){
+//            $(this).find('#form2')[0].reset();
+//            // $(this).find('form2').trigger('reset');
+//            // $(this).find("input").val('').end()
+           
+// });
+        $('#edit-modal').on('hidden.bs.modal', function(e) {
+  $('#form2')[0].reset();
+});
+    </script>
 </body>
 </html>
